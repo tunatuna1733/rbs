@@ -40,6 +40,7 @@
   case kUSE: \
   case kAS: \
   case k__TODO__: \
+  case kCONST: \
   /* nop */
 
 typedef struct {
