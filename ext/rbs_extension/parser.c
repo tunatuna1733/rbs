@@ -581,6 +581,15 @@ EOP:
 static VALUE parse_optional(parserstate *state) {
   range rg;
   rg.start = state->next_token.range.start;
+  
+  if (state->next_token.type == kCONST) {
+    parser_advance(state);
+    VALUE type = parse_simple(state);
+    rg.end = state->current_token.range.end;
+    VALUE location = rbs_new_location(state->buffer, rg);
+    return rbs_param_const(type, location);
+  }
+
   VALUE type = parse_simple(state);
 
   if (state->next_token.type == pQUESTION) {
@@ -1057,6 +1066,8 @@ static VALUE parse_simple(parserstate *state) {
 */
 static VALUE parse_intersection(parserstate *state) {
   range rg;
+
+  // bool is_const = parser_advance_if(state, kCONST);
 
   rg.start = state->next_token.range.start;
   VALUE type = parse_optional(state);

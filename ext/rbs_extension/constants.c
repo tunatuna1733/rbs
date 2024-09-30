@@ -73,6 +73,7 @@ VALUE RBS_Types_Union;
 VALUE RBS_Types_Variable;
 VALUE RBS_Types;
 VALUE RBS_MethodType;
+VALUE RBS_Types_ParamConst;
 
 VALUE RBS_ParsingError;
 
@@ -145,6 +146,7 @@ void rbs__init_constants(void) {
   IMPORT_CONSTANT(RBS_Types_Intersection, RBS_Types, "Intersection");
   IMPORT_CONSTANT(RBS_Types_Literal, RBS_Types, "Literal");
   IMPORT_CONSTANT(RBS_Types_Optional, RBS_Types, "Optional");
+  IMPORT_CONSTANT(RBS_Types_ParamConst, RBS_Types, "ParamConst");
   IMPORT_CONSTANT(RBS_Types_Proc, RBS_Types, "Proc");
   IMPORT_CONSTANT(RBS_Types_Record, RBS_Types, "Record");
   IMPORT_CONSTANT(RBS_Types_Tuple, RBS_Types, "Tuple");

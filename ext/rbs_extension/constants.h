@@ -74,6 +74,7 @@ extern VALUE RBS_Types_Record;
 extern VALUE RBS_Types_Tuple;
 extern VALUE RBS_Types_Union;
 extern VALUE RBS_Types_Variable;
+extern VALUE RBS_Types_ParamConst;
 
 void rbs__init_constants();
 

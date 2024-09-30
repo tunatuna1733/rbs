@@ -144,6 +144,18 @@ VALUE rbs_optional(VALUE type, VALUE location) {
   );
 }
 
+VALUE rbs_param_const(VALUE type, VALUE location) {
+  VALUE args = rb_hash_new();
+  rb_hash_aset(args, ID2SYM(rb_intern("type")), type);
+  rb_hash_aset(args, ID2SYM(rb_intern("location")), location);
+
+  return CLASS_NEW_INSTANCE(
+    RBS_Types_ParamConst,
+    1,
+    &args
+  );
+}
+
 VALUE rbs_block(VALUE type, VALUE required, VALUE self_type) {
   VALUE args = rb_hash_new();
   rb_hash_aset(args, ID2SYM(rb_intern("type")), type);
