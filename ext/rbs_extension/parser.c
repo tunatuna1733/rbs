@@ -581,15 +581,6 @@ EOP:
 static VALUE parse_optional(parserstate *state) {
   range rg;
   rg.start = state->next_token.range.start;
-  
-  if (state->next_token.type == kCONST) {
-    parser_advance(state);
-    VALUE type = parse_simple(state);
-    rg.end = state->current_token.range.end;
-    VALUE location = rbs_new_location(state->buffer, rg);
-    return rbs_param_const(type, location);
-  }
-
   VALUE type = parse_simple(state);
 
   if (state->next_token.type == pQUESTION) {
@@ -600,6 +591,16 @@ static VALUE parse_optional(parserstate *state) {
   } else {
     return type;
   }
+}
+
+static VALUE parse_param_const(parserstate *state) {
+  range rg;
+  rg.start = state->next_token.range.start;
+  // parser_advance_assert(state, kCONST);
+  VALUE type = parse_simple(state);
+  rg.end = state->current_token.range.end;
+  VALUE location = rbs_new_location(state->buffer, rg);
+  return rbs_param_const(type, location);
 }
 
 static void initialize_method_params(method_params *params){
@@ -984,6 +985,9 @@ static VALUE parse_simple(parserstate *state) {
     rb_funcall(type, rb_intern("todo!"), 0);
     return type;
   }
+  case kCONST: {
+    return parse_param_const(state);
+  }
   case tINTEGER: {
     VALUE literal = rb_funcall(
       string_of_loc(state, state->current_token.range.start, state->current_token.range.end),
@@ -1066,8 +1070,6 @@ static VALUE parse_simple(parserstate *state) {
 */
 static VALUE parse_intersection(parserstate *state) {
   range rg;
-
-  // bool is_const = parser_advance_if(state, kCONST);
 
   rg.start = state->next_token.range.start;
   VALUE type = parse_optional(state);

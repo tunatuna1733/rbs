@@ -731,7 +731,7 @@ module RBS
       end
 
       def to_json(state = _ = nil)
-        { class: :optional, type: type, location: location }.to_json(state)
+        { class: :param_const, type: type, location: location }.to_json(state)
       end
 
       def sub(s)

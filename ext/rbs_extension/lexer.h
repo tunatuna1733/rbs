@@ -61,7 +61,7 @@ enum TokenType {
   kUSE,             /* use */
   kAS,              /* as */
   k__TODO__,        /* __todo__ */
-  kCONST,           /* Const */
+  kCONST,           /* const */
 
   tLIDENT,          /* Identifiers starting with lower case */
   tUIDENT,          /* Identifiers starting with upper case */
