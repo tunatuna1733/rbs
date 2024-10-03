@@ -331,4 +331,12 @@ class Foo
 end
     SIG
   end
+
+  def test_param_const
+    assert_writer <<-SIG
+class Foo
+  def foo: (const bool) -> String
+end
+    SIG
+  end
 end
