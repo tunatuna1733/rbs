@@ -61,6 +61,13 @@ class RBS::TypeParsingTest < Test::Unit::TestCase
     end
   end
 
+  def test_param_const
+    Parser.parse_type("const bool").yield_self do |type|
+      assert_instance_of Types::ParamConst, type
+      assert_instance_of Types::Bases::Bool, type.type
+    end
+  end
+
   def test_instance
     Parser.parse_type("Object").yield_self do |type|
       assert_instance_of Types::ClassInstance, type
