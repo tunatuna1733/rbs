@@ -69,6 +69,7 @@ extern VALUE RBS_Types_Interface;
 extern VALUE RBS_Types_Intersection;
 extern VALUE RBS_Types_Literal;
 extern VALUE RBS_Types_Optional;
+extern VALUE RBS_Types_ParamConst;
 extern VALUE RBS_Types_Proc;
 extern VALUE RBS_Types_Record;
 extern VALUE RBS_Types_Tuple;

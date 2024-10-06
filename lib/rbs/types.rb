@@ -707,6 +707,90 @@ module RBS
       end
     end
 
+    class ParamConst
+      attr_reader :type
+      attr_reader :location
+
+      def initialize(type:, location:)
+        @type = type
+        @location = location
+      end
+
+      def ==(other)
+        other.is_a?(ParamConst) && other.type == type
+      end
+
+      alias eql? ==
+
+      def hash
+        self.class.hash ^ type.hash
+      end
+
+      def free_variables(set = Set.new)
+        type.free_variables(set)
+      end
+
+      def to_json(state = _ = nil)
+        { class: :paramconst, type: type, location: location }.to_json(state)
+      end
+
+      def sub(s)
+        self.class.new(type: type.sub(s), location: location)
+      end
+
+      def to_s(level = 0)
+        case t = type
+        when RBS::Types::Literal
+          case t.literal
+          when Symbol
+            return "const #{type.to_s(1)}"
+          end
+        when RBS::Types::Proc
+          return "const (#{type.to_s(1)})?"
+        end
+        "const #{type.to_s(1)}"
+
+      end
+
+      def each_type
+        if block_given?
+          yield type
+        else
+          enum_for :each_type
+        end
+      end
+
+      def map_type_name(&block)
+        ParamConst.new(
+          type: type.map_type_name(&block),
+          location: location
+        )
+      end
+
+      def map_type(&block)
+        if block
+          ParamConst.new(
+            type: yield(type),
+            location: location
+          )
+        else
+          enum_for :map_type
+        end
+      end
+
+      def has_self_type?
+        each_type.any? {|type| type.has_self_type? }
+      end
+
+      def has_classish_type?
+        each_type.any? {|type| type.has_classish_type? }
+      end
+
+      def with_nonreturn_void?
+        each_type.any? {|type| type.with_nonreturn_void? }
+      end
+    end
+
     class Union
       attr_reader :types
       attr_reader :location

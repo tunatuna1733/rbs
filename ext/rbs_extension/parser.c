@@ -1059,6 +1059,9 @@ static VALUE parse_intersection(parserstate *state) {
   range rg;
 
   rg.start = state->next_token.range.start;
+
+  bool is_const = parser_advance_if(state, kCONST);
+
   VALUE type = parse_optional(state);
   VALUE intersection_types = rb_ary_new();
 
@@ -1073,6 +1076,11 @@ static VALUE parse_intersection(parserstate *state) {
   if (rb_array_len(intersection_types) > 1) {
     VALUE location = rbs_new_location(state->buffer, rg);
     type = rbs_intersection(intersection_types, location);
+  }
+
+  if(is_const) {
+    VALUE location = rbs_new_location(state->buffer, rg);
+    return rbs_paramconst(type, location);
   }
 
   return type;
