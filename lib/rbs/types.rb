@@ -743,13 +743,13 @@ module RBS
         when RBS::Types::Literal
           case t.literal
           when Symbol
-            return "#{type.to_s(1)} ?"
+            return "const #{type.to_s(1)}"
           end
         when RBS::Types::Proc
-          return "(#{type.to_s(1)})?"
+          return "const (#{type.to_s(1)})"
         end
 
-        "#{type.to_s(1)}?"
+        "const #{type.to_s(1)}"
       end
 
       def each_type
