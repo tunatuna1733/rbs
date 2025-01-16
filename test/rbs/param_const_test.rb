@@ -1,6 +1,6 @@
 require "test_helper"
 
-class RBS::WriterTest < Test::Unit::TestCase
+class RBS::ParamConstTest < Test::Unit::TestCase
   include TestHelper
 
   Parser = RBS::Parser
