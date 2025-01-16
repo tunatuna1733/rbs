@@ -19,10 +19,42 @@ class RBS::ParamConstTest < Test::Unit::TestCase
     assert_equal sig, format(sig, preserve: preserve)
   end
 
-  def test_param_const
+  def test_param_const_1
     assert_writer <<-SIG
 class Foo
-  def foo: (const (bool & String)) -> String
+  def foo: (const bool) -> String
+end
+    SIG
+  end
+
+  def test_param_const_2
+    assert_writer <<-SIG
+class Foo
+  def foo: (const Integer) -> String
+end
+    SIG
+  end
+
+  def test_param_const_3
+    assert_writer <<-SIG
+class Foo
+  def foo: (const (Integer | String)) -> String
+end
+    SIG
+  end
+
+  def test_param_const_4
+    assert_writer <<-SIG
+class Foo
+  def foo: (const (Integer | bool)) -> String
+end
+    SIG
+  end
+
+  def test_param_const_5
+    assert_writer <<-SIG
+class Foo
+  def foo: (const (Integer & String)) -> String
 end
     SIG
   end
